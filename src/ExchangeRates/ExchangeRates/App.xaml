@@ -1,0 +1,14 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<Application xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="ExchangeRates.Presentation.App">
+    <Application.Resources>
+        <Style x:Key="BlueSeparator" TargetType="BoxView">
+            <Setter Property="HeightRequest" Value="1" />
+            <Setter Property="HorizontalOptions" Value="FillAndExpand" />
+            <Setter Property="Color" Value="#2196F3" />
+            <Setter Property="Margin" Value="0, 5, 0, 5" />
+            <Setter Property="Opacity" Value="0.5" />
+        </Style>
+    </Application.Resources>
+</Application>

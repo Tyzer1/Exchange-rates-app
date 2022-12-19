@@ -1,0 +1,85 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="ExchangeRates.Presentation.Views.SettingsView">
+    <StackLayout BackgroundColor="White">
+        <StackLayout 
+            Orientation="Horizontal" 
+            Padding="15" 
+            BackgroundColor="#2196F3">
+            <ImageButton 
+                Clicked="Back_click" 
+                Source="ChevronLeft50.png" 
+                HeightRequest="30" 
+                WidthRequest="30" 
+                BackgroundColor="#2196F3"/>
+            <BoxView Style="{StaticResource BlueSeparator}" />
+            <Label 
+                Text="Настройка валют" 
+                HorizontalTextAlignment="Center" 
+                TextColor="White" 
+                FontSize="15"/>
+            <BoxView Style="{StaticResource BlueSeparator}" />
+            <ImageButton 
+                Clicked="Ok_click" 
+                Source="OkIcon24.png" 
+                HeightRequest="30" 
+                WidthRequest="30" 
+                BackgroundColor="#2196F3"/>
+        </StackLayout>
+        <ListView 
+            RowHeight="100" 
+            x:Name="lvCurrencies">
+            <ListView.ItemTemplate>
+                <DataTemplate>
+                    <ViewCell>
+                        <Grid Padding="5">
+                            <!--<Grid.GestureRecognizers>
+                                <DragGestureRecognizer
+                                    CanDrag="True"
+                                    DragStartingCommand="{Binding ItemDragged}"
+                                    DragStartingCommandParameter="Control 1" />
+                                <DropGestureRecognizer
+                                    AllowDrop="True"
+                                    DropCommand="{Binding ItemDropped}"
+                                    DropCommandParameter="Control 1" />
+                            </Grid.GestureRecognizers>-->
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width=".1*" />
+                                <ColumnDefinition Width="1.8*" />
+                            </Grid.ColumnDefinitions>
+                            <Label 
+                                VerticalOptions="End" 
+                                Text="{Binding CharCode}" 
+                                Grid.Column="1" 
+                                Grid.ColumnSpan="2" 
+                                FontSize="15" 
+                                TextColor="Black"/>
+                            <StackLayout 
+                                Orientation="Horizontal" 
+                                Grid.Column="1" 
+                                Grid.Row="2">
+                                <Label 
+                                    VerticalOptions="Center" 
+                                    Text="{Binding Scale}" 
+                                    FontSize="10" 
+                                    TextColor="Gray"/>
+                                <Label 
+                                    VerticalOptions="Center" 
+                                    Text="{Binding Name}" 
+                                    FontSize="10" 
+                                    TextColor="Gray"/>
+                            </StackLayout>
+                            <Switch 
+                                IsToggled="{Binding IsActive}" 
+                                Grid.Column="2"/>
+                            <Image 
+                                Source="MenuRounded50" 
+                                Grid.Column="3"/>
+                        </Grid>
+                    </ViewCell>
+                </DataTemplate>
+            </ListView.ItemTemplate>
+        </ListView>
+    </StackLayout>
+</ContentPage>

@@ -1,0 +1,92 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="ExchangeRates.Presentation.Views.MainPage">
+    <StackLayout BackgroundColor="White">
+        <StackLayout Orientation="Horizontal" Padding="15" BackgroundColor="#2196F3">
+            <ImageButton 
+                Source="ChevronLeft50.png" 
+                HeightRequest="30" 
+                WidthRequest="30" 
+                BackgroundColor="#2196F3"/>
+            <BoxView Style="{StaticResource BlueSeparator}" />
+            <Label 
+                HorizontalTextAlignment="Center" 
+                Text="Курсы валют" 
+                TextColor="White" 
+                FontSize="15"/>
+            <BoxView Style="{StaticResource BlueSeparator}" />
+            <ImageButton 
+                Clicked="Settings_click" 
+                Source="GearIcon32.png" 
+                HeightRequest="30" 
+                WidthRequest="30" 
+                BackgroundColor="#2196F3"/>
+        </StackLayout>
+        <Grid>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width=".1*" />
+                <ColumnDefinition Width="1.6*" />
+            </Grid.ColumnDefinitions>
+            <Label 
+                x:Name="lDate1" 
+                Grid.Row="1" 
+                Grid.Column="2" 
+                TextColor="Black"/>
+            <Label 
+                x:Name="lDate2" 
+                Grid.Row="1" 
+                Grid.Column="3" 
+                TextColor="Black"/>
+        </Grid>
+        <ListView 
+            RowHeight="100" 
+            x:Name="lvCurrencies">
+            <ListView.ItemTemplate>
+                <DataTemplate>
+                    <ViewCell>
+                        <Grid Padding="5">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width=".1*" />
+                                <ColumnDefinition Width="1.8*" />
+                            </Grid.ColumnDefinitions>
+                            <Label 
+                                VerticalOptions="End" 
+                                Text="{Binding CharCode}" 
+                                Grid.Column="1" 
+                                Grid.ColumnSpan="2"
+                                FontSize="15" 
+                                TextColor="Black"/>
+                            <StackLayout 
+                                Orientation="Horizontal" 
+                                Grid.Column="1" 
+                                Grid.Row="2">
+                                <Label 
+                                    VerticalOptions="Center" 
+                                    Text="{Binding Scale}" 
+                                    FontSize="10" 
+                                    TextColor="Gray"/>
+                                <Label 
+                                    VerticalOptions="Center" 
+                                    Text="{Binding Name}" 
+                                    FontSize="10" 
+                                    TextColor="Gray"/>
+                            </StackLayout>
+                            <Label
+                                Text="{Binding Rate1}" 
+                                Grid.Row="1" 
+                                Grid.Column="2" 
+                                TextColor="Black"/>
+                            <Label 
+                                Text="{Binding Rate2}" 
+                                Grid.Row="1" 
+                                Grid.Column="3" 
+                                TextColor="Black"/>
+                        </Grid>
+                    </ViewCell>
+                </DataTemplate>
+            </ListView.ItemTemplate>
+        </ListView>
+    </StackLayout>
+
+</ContentPage>
