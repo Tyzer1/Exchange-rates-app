@@ -15,6 +15,6 @@ namespace ExchangeRates.BusinessLogic.Interfaces
         /// <summary>
         /// Get dates for current exchange rates
         /// </summary>
-        Task<IEnumerable<DateTime>> GetDates();
+        IEnumerable<DateTime> GetDates();
     }
 }

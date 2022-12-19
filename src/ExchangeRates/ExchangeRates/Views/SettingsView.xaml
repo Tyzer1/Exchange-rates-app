@@ -34,16 +34,6 @@
                 <DataTemplate>
                     <ViewCell>
                         <Grid Padding="5">
-                            <!--<Grid.GestureRecognizers>
-                                <DragGestureRecognizer
-                                    CanDrag="True"
-                                    DragStartingCommand="{Binding ItemDragged}"
-                                    DragStartingCommandParameter="Control 1" />
-                                <DropGestureRecognizer
-                                    AllowDrop="True"
-                                    DropCommand="{Binding ItemDropped}"
-                                    DropCommandParameter="Control 1" />
-                            </Grid.GestureRecognizers>-->
                             <Grid.ColumnDefinitions>
                                 <ColumnDefinition Width=".1*" />
                                 <ColumnDefinition Width="1.8*" />

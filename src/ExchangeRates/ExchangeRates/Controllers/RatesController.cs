@@ -31,9 +31,9 @@ namespace ExchangeRates.Presentation.Controllers
             return currenciesViewModel;
         }
 
-        public async Task<IEnumerable<DateTime>> GetDates()
+        public IEnumerable<DateTime> GetDates()
         {
-            return await _exchangeRatesService.GetDates();
+            return _exchangeRatesService.GetDates();
         }
     }
 }

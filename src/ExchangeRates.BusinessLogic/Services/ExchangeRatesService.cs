@@ -42,7 +42,7 @@ namespace ExchangeRates.BusinessLogic.Services
             return currenciesDTO;
         }
 
-        public async Task<IEnumerable<DateTime>> GetDates()
+        public IEnumerable<DateTime> GetDates()
         {
             return Dates;
         }

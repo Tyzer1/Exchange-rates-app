@@ -36,7 +36,7 @@ namespace ExchangeRates.Presentation.Views
                     Rate1 = currenciesViewModel.First(y => x.CharCode == y.CharCode).Rate1,
                     Rate2 = currenciesViewModel.First(y => x.CharCode == y.CharCode).Rate2
                 });
-            var dates = await RatesController.GetDates();
+            var dates = RatesController.GetDates();
             List<DateTime> datesList = dates.ToList();
             lDate1.Text = datesList[0].Date.ToString("dd'/'MM'/'yy");
             lDate2.Text = datesList[1].Date.ToString("dd'/'MM'/'yy");
