@@ -2,6 +2,7 @@
 using ExchangeRates.BusinessLogic.Infrastructure;
 using ExchangeRates.BusinessLogic.Interfaces;
 using ExchangeRates.Presentation.ViewModels;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -18,16 +19,23 @@ namespace ExchangeRates.Presentation.Controllers
 
         public async Task<IEnumerable<CurrencyViewModel>> GetSettingsAsync()
         {
-            var settings = await _settingsService.GetSettingsAsync();
-            var settingsViewModel = settings.Select(x =>
-            new CurrencyViewModel
+            try
             {
-                CharCode = x.CharCode,
-                Scale = x.Scale,
-                Name = x.Name,
-                IsActive= x.IsActive,
-            }).ToList();
-            return settingsViewModel;
+                var settings = await _settingsService.GetSettingsAsync();
+                var settingsViewModel = settings.Select(x =>
+                new CurrencyViewModel
+                {
+                    CharCode = x.CharCode,
+                    Scale = x.Scale,
+                    Name = x.Name,
+                    IsActive = x.IsActive,
+                }).ToList();
+                return settingsViewModel;
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
         }
 
         public void SaveSettings(IEnumerable<CurrencyViewModel> settings)

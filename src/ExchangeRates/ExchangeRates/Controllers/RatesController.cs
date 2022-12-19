@@ -18,17 +18,24 @@ namespace ExchangeRates.Presentation.Controllers
 
         public async Task<IEnumerable<CurrencyViewModel>> GetViewModel()
         {
-            var rates = await _exchangeRatesService.GetExchangeRatesAsync();
-            var currenciesViewModel = rates.Select(x =>
-            new CurrencyViewModel
+            try
             {
-                CharCode = x.CharCode,
-                Scale = x.Scale,
-                Name = x.Name,
-                Rate1 = x.Rate1,
-                Rate2 = x.Rate2
-            }).ToList();
-            return currenciesViewModel;
+                var rates = await _exchangeRatesService.GetExchangeRatesAsync();
+                var currenciesViewModel = rates.Select(x =>
+                new CurrencyViewModel
+                {
+                    CharCode = x.CharCode,
+                    Scale = x.Scale,
+                    Name = x.Name,
+                    Rate1 = x.Rate1,
+                    Rate2 = x.Rate2
+                }).ToList();
+                return currenciesViewModel;
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
         }
 
         public IEnumerable<DateTime> GetDates()

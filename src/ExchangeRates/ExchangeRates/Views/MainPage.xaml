@@ -17,6 +17,7 @@
                 FontSize="15"/>
             <BoxView Style="{StaticResource BlueSeparator}" />
             <ImageButton 
+                x:Name="ibSettings"
                 Clicked="Settings_click" 
                 Source="GearIcon32.png" 
                 HeightRequest="30" 

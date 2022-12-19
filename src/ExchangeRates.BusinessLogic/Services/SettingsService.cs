@@ -23,11 +23,18 @@ namespace ExchangeRates.BusinessLogic.Services
             string json = Preferences.Get("Currencies", "");
             if (json.Count() == 0)
             {
-                var fullCurrencies = await _exchangeRatesService.GetExchangeRatesAsync();
-                fullCurrencies
-                    .Where(x => x.CharCode == "USD" || x.CharCode == "EUR" || x.CharCode == "RUB")
-                    .ForEach(y => y.IsActive = true);
-                return fullCurrencies;
+                try
+                {
+                    var fullCurrencies = await _exchangeRatesService.GetExchangeRatesAsync();
+                    fullCurrencies
+                        .Where(x => x.CharCode == "USD" || x.CharCode == "EUR" || x.CharCode == "RUB")
+                        .ForEach(y => y.IsActive = true);
+                    return fullCurrencies;
+                }
+                catch(Exception ex)
+                {
+                    throw ex;
+                }
             }
             var currencies = JsonConvert.DeserializeObject<IEnumerable<CurrencyDTO>>(json);
             return currencies;

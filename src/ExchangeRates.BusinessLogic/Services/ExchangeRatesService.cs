@@ -21,25 +21,32 @@ namespace ExchangeRates.BusinessLogic.Services
 
         public async Task<IEnumerable<CurrencyDTO>> GetExchangeRatesAsync()
         {
-            var rates1 = await _provider.GetByDateAsync(DateTime.Today);
-            var rates2 = await _provider.GetByDateAsync(DateTime.Today.AddDays(1));
-            Dates = new List<DateTime> { DateTime.Today, DateTime.Today.AddDays(1) };
-            if (rates2.Count() == 0)
+            try
             {
-                rates2 = rates1;
-                rates1 = await _provider.GetByDateAsync(DateTime.Today.AddDays(-1));
-                Dates = new List<DateTime> { DateTime.Today.AddDays(-1), DateTime.Today };
+                var rates1 = await _provider.GetByDateAsync(DateTime.Today);
+                var rates2 = await _provider.GetByDateAsync(DateTime.Today.AddDays(1));
+                Dates = new List<DateTime> { DateTime.Today, DateTime.Today.AddDays(1) };
+                if (rates2.Count() == 0)
+                {
+                    rates2 = rates1;
+                    rates1 = await _provider.GetByDateAsync(DateTime.Today.AddDays(-1));
+                    Dates = new List<DateTime> { DateTime.Today.AddDays(-1), DateTime.Today };
+                }
+                var currenciesDTO = rates1.Select(x =>
+                new CurrencyDTO
+                {
+                    CharCode = x.CharCode,
+                    Scale = x.Scale,
+                    Name = x.Name,
+                    Rate1 = x.Rate,
+                    Rate2 = rates2.First(y => x.Name == y.Name).Rate
+                }).ToList();
+                return currenciesDTO;
             }
-            var currenciesDTO = rates1.Select(x =>
-            new CurrencyDTO
+            catch(Exception ex)
             {
-                CharCode = x.CharCode,
-                Scale = x.Scale,
-                Name = x.Name,
-                Rate1 = x.Rate,
-                Rate2 = rates2.First(y => x.Name == y.Name).Rate
-            }).ToList();
-            return currenciesDTO;
+                throw ex;
+            }
         }
 
         public IEnumerable<DateTime> GetDates()

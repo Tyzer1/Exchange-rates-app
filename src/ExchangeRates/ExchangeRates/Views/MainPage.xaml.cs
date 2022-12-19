@@ -23,25 +23,33 @@ namespace ExchangeRates.Presentation.Views
 
         public async void InitViewModel()
         {
-            var currenciesViewModel = await RatesController.GetViewModel();
-            var currenciesSettings = await SettingsController.GetSettingsAsync();
-            var filteredCurrencies = currenciesSettings
-                .Where(x => x.IsActive == true)
-                .Select(x =>
-                new CurrencyViewModel
-                {
-                    CharCode = x.CharCode,
-                    Scale = x.Scale,
-                    Name = x.Name,
-                    Rate1 = currenciesViewModel.First(y => x.CharCode == y.CharCode).Rate1,
-                    Rate2 = currenciesViewModel.First(y => x.CharCode == y.CharCode).Rate2
-                });
-            var dates = RatesController.GetDates();
-            List<DateTime> datesList = dates.ToList();
-            lDate1.Text = datesList[0].Date.ToString("dd'/'MM'/'yy");
-            lDate2.Text = datesList[1].Date.ToString("dd'/'MM'/'yy");
-            CurrenciesRates = new ObservableCollection<CurrencyViewModel>(filteredCurrencies);
-            lvCurrencies.ItemsSource = CurrenciesRates;
+            IEnumerable<CurrencyViewModel> currenciesViewModel;
+            try
+            {
+                currenciesViewModel = await RatesController.GetViewModel();
+                var currenciesSettings = await SettingsController.GetSettingsAsync();
+                var filteredCurrencies = currenciesSettings
+                    .Where(x => x.IsActive == true)
+                    .Select(x =>
+                    new CurrencyViewModel
+                    {
+                        CharCode = x.CharCode,
+                        Scale = x.Scale,
+                        Name = x.Name,
+                        Rate1 = currenciesViewModel.First(y => x.CharCode == y.CharCode).Rate1,
+                        Rate2 = currenciesViewModel.First(y => x.CharCode == y.CharCode).Rate2
+                    });
+                var dates = RatesController.GetDates();
+                List<DateTime> datesList = dates.ToList();
+                lDate1.Text = datesList[0].Date.ToString("dd'/'MM'/'yy");
+                lDate2.Text = datesList[1].Date.ToString("dd'/'MM'/'yy");
+                CurrenciesRates = new ObservableCollection<CurrencyViewModel>(filteredCurrencies);
+                lvCurrencies.ItemsSource = CurrenciesRates;
+            }
+            catch
+            {
+                await DisplayAlert("Ошибка", "Не удалось получить курсы валют", "Ok");
+            }
         }
 
         public void Settings_click(object sender, EventArgs e)

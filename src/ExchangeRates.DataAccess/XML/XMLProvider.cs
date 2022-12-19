@@ -14,23 +14,28 @@ namespace ExchangeRates.DataAccess.XML
         public async Task<IEnumerable<Currency>> GetByDateAsync(DateTime date)
         {
             string dateRequest = date.Month.ToString() + "/" + date.Day.ToString() + "/" + date.Year.ToString();
-            string url = $"https://www.nbrb.by/services/xmlexrates.aspx?ondate={dateRequest}";
+            string url = $"https://www.nbrb.by/servies/xmlexrates.aspx?ondate={dateRequest}";
 
             //Use HTTPWebRequest
             HttpWebRequest request = (HttpWebRequest)WebRequest.Create(url);
             request.AutomaticDecompression = DecompressionMethods.GZip;
+            try
+            {
+                //Get Response
+                var response = await request.GetResponseAsync();
 
-            //Get Response
-            //HttpWebResponse response = await (HttpWebResponse)request.GetResponse();
-            var response = await request.GetResponseAsync();
+                //Call GetResponseStream() to return Stream
+                Stream responseStream = response.GetResponseStream();
 
-            //Call GetResponseStream() to return Stream
-            Stream responseStream = response.GetResponseStream();
-
-            //Convert from XML to C# model:
-            XmlSerializer serializer = new XmlSerializer(typeof(DailyExRates));
-            DailyExRates dailyExRates = (DailyExRates)serializer.Deserialize(responseStream);
-            return dailyExRates.Currencies;
+                //Convert from XML to C# model:
+                XmlSerializer serializer = new XmlSerializer(typeof(DailyExRates));
+                DailyExRates dailyExRates = (DailyExRates)serializer.Deserialize(responseStream);
+                return dailyExRates.Currencies;
+            }
+            catch(Exception ex)
+            {
+                throw ex;
+            }
         }
     }
 }
