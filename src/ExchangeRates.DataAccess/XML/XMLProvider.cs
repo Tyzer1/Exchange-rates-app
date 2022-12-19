@@ -14,7 +14,7 @@ namespace ExchangeRates.DataAccess.XML
         public async Task<IEnumerable<Currency>> GetByDateAsync(DateTime date)
         {
             string dateRequest = date.Month.ToString() + "/" + date.Day.ToString() + "/" + date.Year.ToString();
-            string url = $"https://www.nbrb.by/servies/xmlexrates.aspx?ondate={dateRequest}";
+            string url = $"https://www.nbrb.by/services/xmlexrates.aspx?ondate={dateRequest}";
 
             //Use HTTPWebRequest
             HttpWebRequest request = (HttpWebRequest)WebRequest.Create(url);
