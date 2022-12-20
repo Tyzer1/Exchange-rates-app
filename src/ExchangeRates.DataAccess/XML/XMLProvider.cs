@@ -6,6 +6,7 @@ using ExchangeRates.DataAccess.Interfaces;
 using ExchangeRates.DataAccess.Entities;
 using System.Net;
 using System;
+using Xamarin.Essentials;
 
 namespace ExchangeRates.DataAccess.XML
 {
@@ -14,7 +15,8 @@ namespace ExchangeRates.DataAccess.XML
         public async Task<IEnumerable<Currency>> GetByDateAsync(DateTime date)
         {
             string dateRequest = date.Month.ToString() + "/" + date.Day.ToString() + "/" + date.Year.ToString();
-            string url = $"https://www.nbrb.by/services/xmlexrates.aspx?ondate={dateRequest}";
+            //string url = $"https://www.nbrb.by/services/xmlexrates.aspx?ondate={dateRequest}";
+            var url = Preferences.Get("GetRatesUrl", "") + dateRequest;
 
             //Use HTTPWebRequest
             HttpWebRequest request = (HttpWebRequest)WebRequest.Create(url);
