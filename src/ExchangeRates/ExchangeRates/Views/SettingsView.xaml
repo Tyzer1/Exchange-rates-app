@@ -29,11 +29,22 @@
         </StackLayout>
         <ListView 
             RowHeight="100" 
-            x:Name="lvCurrencies">
+            x:Name="lvCurrencies"
+            ItemsSource="{Binding Items}">
             <ListView.ItemTemplate>
                 <DataTemplate>
                     <ViewCell>
                         <Grid Padding="5">
+                            <Grid.GestureRecognizers>
+                                <DragGestureRecognizer
+                                    CanDrag="True"
+                                    DragStartingCommand="{Binding BindingContext.ItemDragged, Source={x:Reference lvCurrencies}}"
+                                    DragStartingCommandParameter="{Binding}"/>
+                                <DropGestureRecognizer
+                                    AllowDrop="True"
+                                    DropCommand="{Binding BindingContext.ItemDropped, Source={x:Reference lvCurrencies}}"
+                                    DropCommandParameter="{Binding}"/>
+                            </Grid.GestureRecognizers>
                             <Grid.ColumnDefinitions>
                                 <ColumnDefinition Width=".1*" />
                                 <ColumnDefinition Width="1.8*" />

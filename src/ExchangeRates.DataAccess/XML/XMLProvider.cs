@@ -15,7 +15,6 @@ namespace ExchangeRates.DataAccess.XML
         public async Task<IEnumerable<Currency>> GetByDateAsync(DateTime date)
         {
             string dateRequest = date.Month.ToString() + "/" + date.Day.ToString() + "/" + date.Year.ToString();
-            //string url = $"https://www.nbrb.by/services/xmlexrates.aspx?ondate={dateRequest}";
             var url = Preferences.Get("GetRatesUrl", "") + dateRequest;
 
             //Use HTTPWebRequest
@@ -23,10 +22,8 @@ namespace ExchangeRates.DataAccess.XML
             request.AutomaticDecompression = DecompressionMethods.GZip;
             try
             {
-                //Get Response
                 var response = await request.GetResponseAsync();
 
-                //Call GetResponseStream() to return Stream
                 Stream responseStream = response.GetResponseStream();
 
                 //Convert from XML to C# model:

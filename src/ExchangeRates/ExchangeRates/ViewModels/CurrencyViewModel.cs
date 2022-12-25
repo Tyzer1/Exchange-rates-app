@@ -1,97 +1,64 @@
 ﻿using System.ComponentModel;
+using Xamarin.CommunityToolkit.ObjectModel;
 
 namespace ExchangeRates.Presentation.ViewModels
 {
-    public class CurrencyViewModel : INotifyPropertyChanged
+    public class CurrencyViewModel :ObservableObject
     {
+        private int _id;
+        public int Id
+        {
+            get { return _id; }
+            set { SetProperty(ref _id, value); }
+        }
+
         private string _charCode;
         public string CharCode
         {
             get { return _charCode; }
-            set
-            {
-                if (_charCode != value)
-                {
-                    _charCode = value;
-                    NotifyPropertyChanged("CharCode");
-                }
-            }
+            set { SetProperty(ref _charCode, value); }
         }
 
         private string _scale;
         public string Scale
         {
             get { return _scale; }
-            set
-            {
-                if (_scale != value)
-                {
-                    _scale = value;
-                    NotifyPropertyChanged("Scale");
-                }
-            }
+            set { SetProperty(ref _scale, value); }
         }
 
         private string _name;
         public string Name
         {
             get { return _name; }
-            set
-            {
-                if (_name != value)
-                {
-                    _name = value;
-                    NotifyPropertyChanged("Name");
-                }
-            }
+            set { SetProperty(ref _name, value); }
         }
 
         private string _rate1;
         public string Rate1
         {
             get { return _rate1; }
-            set
-            {
-                if (_rate1 != value)
-                {
-                    _rate1 = value;
-                    NotifyPropertyChanged("Rate1");
-                }
-            }
+            set { SetProperty(ref _rate1, value); }
         }
 
         private string _rate2;
         public string Rate2
         {
             get { return _rate2; }
-            set
-            {
-                if (_rate2 != value)
-                {
-                    _rate2 = value;
-                    NotifyPropertyChanged("Rate2");
-                }
-            }
+            set { SetProperty(ref _rate2, value); }
         }
 
         private bool _isActive;
         public bool IsActive
         {
             get { return _isActive; }
-            set
-            {
-                if (_isActive != value)
-                {
-                    _isActive = value;
-                    NotifyPropertyChanged("IsActive");
-                }
-            }
+            set { SetProperty(ref _isActive, value); }
         }
 
-        public event PropertyChangedEventHandler PropertyChanged;
-        public void NotifyPropertyChanged(string propName)
+        private bool _isBeingDragged;
+        public bool IsBeingDragged
         {
-            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propName));
+            get { return _isBeingDragged; }
+            set { SetProperty(ref _isBeingDragged, value); }
         }
     }
 }
