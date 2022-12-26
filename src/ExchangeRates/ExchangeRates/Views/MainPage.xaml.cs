@@ -12,7 +12,8 @@ namespace ExchangeRates.Presentation.Views
     {
         private ObservableCollection<CurrencyViewModel> _currencyRates;
         private List<DateTime> _currencyDates;
-         
+
+        public IEnumerable<CurrencyViewModel> Currencies { get; private set; }
         public RatesController RatesController { get; private set; }
         public SettingsController SettingsController { get; private set; }
         public MainPage()
@@ -25,8 +26,7 @@ namespace ExchangeRates.Presentation.Views
 
         public async void InitViewModel()
         {
-            IEnumerable<CurrencyViewModel> currenciesViewModel = await RatesController.GetViewModel();
-            _currencyRates = new ObservableCollection<CurrencyViewModel>(currenciesViewModel);
+            Currencies = await RatesController.GetViewModelAsync();
             _currencyDates = RatesController.GetDates().ToList();
             UpdateViewModel();
         }
@@ -44,8 +44,8 @@ namespace ExchangeRates.Presentation.Views
                         CharCode = x.CharCode,
                         Scale = x.Scale,
                         Name = x.Name,
-                        Rate1 = _currencyRates.First(y => x.CharCode == y.CharCode).Rate1,
-                        Rate2 = _currencyRates.First(y => x.CharCode == y.CharCode).Rate2
+                        Rate1 = Currencies.First(y => x.CharCode == y.CharCode).Rate1,
+                        Rate2 = Currencies.First(y => x.CharCode == y.CharCode).Rate2
                     });
                 lDate1.Text = _currencyDates[0].Date.ToString("dd'/'MM'/'yy");
                 lDate2.Text = _currencyDates[1].Date.ToString("dd'/'MM'/'yy");

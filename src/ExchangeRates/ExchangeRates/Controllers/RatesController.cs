@@ -16,7 +16,7 @@ namespace ExchangeRates.Presentation.Controllers
             _exchangeRatesService = IocRegistrator.Container.Create<IExchangeRatesService>();
         }
 
-        public async Task<IEnumerable<CurrencyViewModel>> GetViewModel()
+        public async Task<IEnumerable<CurrencyViewModel>> GetViewModelAsync()
         {
             try
             {

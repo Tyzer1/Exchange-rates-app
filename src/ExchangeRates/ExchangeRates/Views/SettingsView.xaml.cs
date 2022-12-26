@@ -49,7 +49,7 @@ namespace ExchangeRates.Presentation.Views
         {
             ParentPage.SettingsController.SaveSettings(_settingsViewModel.Items);
             //Implement settings right now
-            ParentPage.InitViewModel();
+            ParentPage.UpdateViewModel();
             Application.Current.MainPage = ParentPage;
         }
 	}
