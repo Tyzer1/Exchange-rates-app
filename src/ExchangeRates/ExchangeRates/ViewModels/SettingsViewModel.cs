@@ -1,6 +1,6 @@
 ﻿using ExchangeRates.BusinessLogic.Infrastructure;
-using System.Collections.ObjectModel;
-using System.Diagnostics;
+using ExchangeRates.Presentation.Controllers;
+using System;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Windows.Input;
@@ -12,20 +12,59 @@ namespace ExchangeRates.Presentation.ViewModels
 {
     public class SettingsViewModel : ObservableObject
     {
+        private SettingsController _controller;
         private SortableObservableCollection<CurrencyViewModel> _items = new SortableObservableCollection<CurrencyViewModel>();
         public SortableObservableCollection<CurrencyViewModel> Items
         {
             get { return _items; }
             set { SetProperty(ref _items, value); }
         }
+        public INavigation Navigation { get; set; }
         public ICommand ItemDragged { get; }
-
         public ICommand ItemDropped { get; }
+        public ICommand Back { get; }
+        public ICommand SaveAndExit { get; }
 
-        public SettingsViewModel()
+        public SettingsViewModel(INavigation pageNav)
         {
+            Navigation = pageNav;
             ItemDragged = new Command<CurrencyViewModel>(OnItemDragged);
             ItemDropped = new Command<CurrencyViewModel>(i => OnItemDropped(i));
+            Back = new Command(OnBack);
+            SaveAndExit = new Command(OnSaveAndExit);
+            _controller = new SettingsController();
+            InitViewModel();
+        }
+
+        private async void InitViewModel()
+        {
+            try
+            {
+                var settings = await _controller.GetSettingsAsync();
+                int counter = 0;
+                foreach (var c in settings)
+                {
+                    c.Id = counter++;
+                }
+
+                Items =
+                    new SortableObservableCollection<CurrencyViewModel>(settings) { SortingSelector = i => i.Id };
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
+
+        private void OnBack()
+        {
+            Navigation.PopAsync();
+        }
+
+        private void OnSaveAndExit()
+        {
+            _controller.SaveSettings(Items);
+            Navigation.PopAsync();
         }
 
         private void OnItemDragged(CurrencyViewModel item)

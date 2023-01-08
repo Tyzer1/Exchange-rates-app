@@ -12,7 +12,7 @@ namespace ExchangeRates.Presentation
         {
             InitializeComponent();
             InitResources();
-            MainPage = new MainPage();
+            MainPage = new NavigationPage(new ExRatesView());
         }
 
         private void InitResources()

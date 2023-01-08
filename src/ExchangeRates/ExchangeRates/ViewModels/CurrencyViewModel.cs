@@ -3,7 +3,7 @@ using Xamarin.CommunityToolkit.ObjectModel;
 
 namespace ExchangeRates.Presentation.ViewModels
 {
-    public class CurrencyViewModel :ObservableObject
+    public class CurrencyViewModel : ObservableObject
     {
         private int _id;
         public int Id

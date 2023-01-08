@@ -1,14 +1,15 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-             x:Class="ExchangeRates.Presentation.Views.SettingsView">
+             x:Class="ExchangeRates.Presentation.Views.SettingsView"
+             NavigationPage.HasNavigationBar="false">
     <StackLayout BackgroundColor="White">
         <StackLayout 
             Orientation="Horizontal" 
             Padding="15" 
             BackgroundColor="#2196F3">
             <ImageButton 
-                Clicked="Back_click" 
+                Command="{Binding Back}"
                 Source="ChevronLeft50.png" 
                 HeightRequest="30" 
                 WidthRequest="30" 
@@ -21,7 +22,7 @@
                 FontSize="15"/>
             <BoxView Style="{StaticResource BlueSeparator}" />
             <ImageButton 
-                Clicked="Ok_click" 
+                Command="{Binding SaveAndExit}"
                 Source="OkIcon24.png" 
                 HeightRequest="30" 
                 WidthRequest="30" 
