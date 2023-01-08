@@ -6,9 +6,9 @@ using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
+using Acr.UserDialogs;
 
 namespace ExchangeRates.Presentation.Views
 {
@@ -19,7 +19,7 @@ namespace ExchangeRates.Presentation.Views
         public ExRatesView()
         {
             InitializeComponent();
-            _exRatesViewModel = new ExRatesViewModel(Navigation);
+            _exRatesViewModel = new ExRatesViewModel(UserDialogs.Instance, Navigation);
             BindingContext = _exRatesViewModel;
         }
 

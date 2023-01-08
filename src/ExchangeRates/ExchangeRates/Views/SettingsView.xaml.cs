@@ -1,4 +1,5 @@
-﻿using ExchangeRates.BusinessLogic.Infrastructure;
+﻿using Acr.UserDialogs;
+using ExchangeRates.BusinessLogic.Infrastructure;
 using ExchangeRates.Presentation.ViewModels;
 using System;
 using System.Collections.ObjectModel;
@@ -13,14 +14,7 @@ namespace ExchangeRates.Presentation.Views
 		public SettingsView ()
 		{
 			InitializeComponent();
-            try
-            {
-                BindingContext = new SettingsViewModel(Navigation);
-            }
-            catch
-            {
-                DisplayAlert("Ошибка", "Не удалось получить курсы валют", "Ok");
-            }
+            BindingContext = new SettingsViewModel(UserDialogs.Instance, Navigation);
         }
 	}
 }

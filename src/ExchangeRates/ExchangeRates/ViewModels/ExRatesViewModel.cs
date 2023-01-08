@@ -7,6 +7,9 @@ using ExchangeRates.Presentation.Controllers;
 using System.Linq;
 using System.Windows.Input;
 using ExchangeRates.Presentation.Views;
+using Xamarin.CommunityToolkit.Extensions;
+using Xamarin.CommunityToolkit.UI.Views;
+using Acr.UserDialogs;
 
 namespace ExchangeRates.Presentation.ViewModels
 {
@@ -25,15 +28,16 @@ namespace ExchangeRates.Presentation.ViewModels
         public SettingsController SettingsController { get; private set; }
 
         public INavigation Navigation { get; private set; }
+        public IUserDialogs Dialogs { get; }
 
         public ICommand OpenSettings { get; }
 
-        public ExRatesViewModel(INavigation pageNav)
+        public ExRatesViewModel(IUserDialogs dialogs, INavigation pageNav)
         {
             Navigation = pageNav;
+            Dialogs = dialogs;
             RatesController = new RatesController();
             SettingsController = new SettingsController();
-
             OpenSettings = new Command(OnOpenSettings);
         }
 
@@ -41,10 +45,17 @@ namespace ExchangeRates.Presentation.ViewModels
         {
             if (Currencies == null)
             {
-                Currencies = await RatesController.GetViewModelAsync();
-                CurrencyDates = RatesController.GetDates().ToList();
+                try
+                {
+                    Currencies = await RatesController.GetViewModelAsync();
+                    CurrencyDates = RatesController.GetDates().ToList();
+                    UpdateViewModel();
+                }
+                catch
+                {
+                    await Dialogs.AlertAsync("Can't get rates");
+                }
             }
-            UpdateViewModel();
         }
 
         private void OnOpenSettings()
@@ -54,21 +65,29 @@ namespace ExchangeRates.Presentation.ViewModels
 
         public async void UpdateViewModel()
         {
-            var currenciesSettings = await SettingsController.GetSettingsAsync();
-            var filteredCurrencies = currenciesSettings
-                .Where(x => x.IsActive == true)
-                .Select(x =>
-                new CurrencyViewModel
-                {
-                    CharCode = x.CharCode,
-                    Scale = x.Scale,
-                    Name = x.Name,
-                    Rate1 = Currencies.First(y => x.CharCode == y.CharCode).Rate1,
-                    Rate2 = Currencies.First(y => x.CharCode == y.CharCode).Rate2
-                });
-            Date1 = CurrencyDates[0].Date.ToString("dd'/'MM'/'yy");
-            Date2 = CurrencyDates[1].Date.ToString("dd'/'MM'/'yy");
-            CurrencyRates = new ObservableCollection<CurrencyViewModel>(filteredCurrencies);
+            try
+            {
+                var currenciesSettings = await SettingsController.GetSettingsAsync();
+
+                var filteredCurrencies = currenciesSettings
+                    .Where(x => x.IsActive == true)
+                    .Select(x =>
+                    new CurrencyViewModel
+                    {
+                        CharCode = x.CharCode,
+                        Scale = x.Scale,
+                        Name = x.Name,
+                        Rate1 = Currencies.First(y => x.CharCode == y.CharCode).Rate1,
+                        Rate2 = Currencies.First(y => x.CharCode == y.CharCode).Rate2
+                    });
+                Date1 = CurrencyDates[0].Date.ToString("dd'/'MM'/'yy");
+                Date2 = CurrencyDates[1].Date.ToString("dd'/'MM'/'yy");
+                CurrencyRates = new ObservableCollection<CurrencyViewModel>(filteredCurrencies);
+            }
+            catch
+            {
+                await Dialogs.AlertAsync("Can't get settings");
+            }
         }
 
         private string _date1;

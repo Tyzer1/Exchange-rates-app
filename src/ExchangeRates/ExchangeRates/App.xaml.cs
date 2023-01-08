@@ -17,7 +17,8 @@ namespace ExchangeRates.Presentation
 
         private void InitResources()
         {
-            string url = $"https://www.nbrb.by/services/xmlexrates.aspx?ondate=";
+            //string url = $"https://www.nbrb.by/services/xmlexrates.aspx?ondate=";
+            string url = $"https://www.brb.by/services/xmlexrates.aspx?ondate=";
             Preferences.Set("GetRatesUrl", url);
         }
 

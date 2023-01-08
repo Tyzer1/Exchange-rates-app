@@ -1,4 +1,5 @@
-﻿using ExchangeRates.BusinessLogic.Infrastructure;
+﻿using Acr.UserDialogs;
+using ExchangeRates.BusinessLogic.Infrastructure;
 using ExchangeRates.Presentation.Controllers;
 using System;
 using System.Linq;
@@ -20,14 +21,16 @@ namespace ExchangeRates.Presentation.ViewModels
             set { SetProperty(ref _items, value); }
         }
         public INavigation Navigation { get; set; }
+        public IUserDialogs Dialogs { get; }
         public ICommand ItemDragged { get; }
         public ICommand ItemDropped { get; }
         public ICommand Back { get; }
         public ICommand SaveAndExit { get; }
 
-        public SettingsViewModel(INavigation pageNav)
+        public SettingsViewModel(IUserDialogs dialogs, INavigation pageNav)
         {
             Navigation = pageNav;
+            Dialogs = dialogs;
             ItemDragged = new Command<CurrencyViewModel>(OnItemDragged);
             ItemDropped = new Command<CurrencyViewModel>(i => OnItemDropped(i));
             Back = new Command(OnBack);
@@ -50,9 +53,9 @@ namespace ExchangeRates.Presentation.ViewModels
                 Items =
                     new SortableObservableCollection<CurrencyViewModel>(settings) { SortingSelector = i => i.Id };
             }
-            catch (Exception ex)
+            catch
             {
-                throw ex;
+                await Dialogs.AlertAsync("Can't get settings");
             }
         }
 

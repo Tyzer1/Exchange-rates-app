@@ -1,10 +1,10 @@
 ﻿using System;
-
 using Android.App;
 using Android.Content.PM;
 using Android.Runtime;
 using Android.OS;
 using ExchangeRates.Presentation;
+using Acr.UserDialogs;
 
 namespace ExchangeRates.Droid
 {
@@ -15,6 +15,7 @@ namespace ExchangeRates.Droid
         {
             base.OnCreate(savedInstanceState);
 
+            UserDialogs.Init(this);
             Xamarin.Essentials.Platform.Init(this, savedInstanceState);
             global::Xamarin.Forms.Forms.Init(this, savedInstanceState);
             LoadApplication(new App());
