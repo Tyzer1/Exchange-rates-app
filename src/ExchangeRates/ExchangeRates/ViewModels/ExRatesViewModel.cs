@@ -43,19 +43,21 @@ namespace ExchangeRates.Presentation.ViewModels
 
         public async void InitViewModel()
         {
-            if (Currencies == null)
+            try
             {
-                try
+                if (Currencies == null && CurrencyDates == null)
                 {
                     Currencies = await RatesController.GetViewModelAsync();
                     CurrencyDates = RatesController.GetDates().ToList();
-                    UpdateViewModel();
-                }
-                catch
-                {
-                    await Dialogs.AlertAsync("Can't get rates");
                 }
             }
+            catch
+            {
+                await Dialogs.AlertAsync("Can't get rates");
+                return;
+            }
+
+            UpdateViewModel();
         }
 
         private void OnOpenSettings()

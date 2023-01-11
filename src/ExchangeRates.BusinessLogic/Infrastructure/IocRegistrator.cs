@@ -13,9 +13,10 @@ namespace ExchangeRates.BusinessLogic.Infrastructure
         static IocRegistrator()
         {
             Container = new IocContainer();
-            Container.Register<IDataProvider<Currency>, XMLProvider>();
+            Container.Register<IDataUrlProvider<Currency>, XMLProvider>();
             Container.Register<IExchangeRatesService, ExchangeRatesService>();
             Container.Register<ISettingsService, SettingsService>();
+            Container.Register<IConfigurationService, ConfigurationService>();
         }
     }
 }

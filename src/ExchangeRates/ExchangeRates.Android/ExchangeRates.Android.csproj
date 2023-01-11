@@ -61,11 +61,17 @@
     <PackageReference Include="Xamarin.Essentials" Version="1.7.4" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Configuration\AndroidConfigurationStreamProvider.cs" />
+    <Compile Include="Configuration\AndroidConfigurationStreamProviderFactory.cs" />
     <Compile Include="MainActivity.cs" />
     <Compile Include="Resources\Resource.designer.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
+    <AndroidAsset Include="Assets\platform.json" />
+    <AndroidAsset Include="..\..\ExchangeRates.BusinessLogic\config.json">
+      <Link>Assets\config.json</Link>
+    </AndroidAsset>
     <None Include="Resources\AboutResources.txt" />
     <None Include="Assets\AboutAssets.txt" />
     <None Include="Properties\AndroidManifest.xml" />
@@ -87,6 +93,10 @@
     <AndroidResource Include="Resources\mipmap-xxxhdpi\launcher_foreground.png" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\..\ExchangeRates.BusinessLogic\ExchangeRates.BusinessLogic.csproj">
+      <Project>{59C574AF-5C51-4976-B273-1E433C65FD6D}</Project>
+      <Name>ExchangeRates.BusinessLogic</Name>
+    </ProjectReference>
     <ProjectReference Include="..\ExchangeRates\ExchangeRates.Presentation.csproj">
       <Project>{0C10116C-B3E8-420E-A9AD-5988B4F52DCE}</Project>
       <Name>ExchangeRates.Presentation</Name>

@@ -10,12 +10,11 @@ using Xamarin.Essentials;
 
 namespace ExchangeRates.DataAccess.XML
 {
-    public class XMLProvider : IDataProvider<Currency>
+    public class XMLProvider : IDataUrlProvider<Currency>
     {
-        public async Task<IEnumerable<Currency>> GetByDateAsync(DateTime date)
+        public async Task<IEnumerable<Currency>> GetByDateAsync(DateTime date, string url)
         {
             string dateRequest = date.Month.ToString() + "/" + date.Day.ToString() + "/" + date.Year.ToString();
-            var url = Preferences.Get("GetRatesUrl", "") + dateRequest;
 
             //Use HTTPWebRequest
             HttpWebRequest request = (HttpWebRequest)WebRequest.Create(url);
